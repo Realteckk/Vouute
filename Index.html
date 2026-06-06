@@ -118,18 +118,13 @@ nav::before {
   overflow: hidden;
   background: var(--dark);
 }
-.hero-video {
+.hero-bg-img {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: cover;
-  object-position: center top;
+  inset: 0;
+  background-image: url('Hero.jpg');
+  background-size: cover;
+  background-position: center top;
   filter: brightness(0.6) saturate(0.85);
-  pointer-events: none;
   z-index: 0;
 }
 .hero-overlay {
@@ -663,9 +658,7 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
-  <video class="hero-video" id="heroVideo" muted loop playsinline disablepictureinpicture preload="auto">
-    <source src="Hero.mp4" type="video/mp4">
-  </video>
+  <div class="hero-bg-img"></div>
   <div class="hero-overlay"></div>
 
   <div class="hero-tagline">
@@ -813,75 +806,4 @@ footer {
 <section class="contact" id="contact">
   <div class="contact-grid">
     <div class="reveal">
-      <h2 class="contact-heading">Let's build together.</h2>
-      <p class="contact-sub">Tell us about your project. We respond to every inquiry within 24 hours and treat every conversation with full attention.</p>
-    </div>
-    <div class="contact-form reveal">
-      <div class="form-field">
-        <label>Your name</label>
-        <input type="text" placeholder="John Anderson">
-      </div>
-      <div class="form-field">
-        <label>Email address</label>
-        <input type="email" placeholder="john@example.com">
-      </div>
-      <div class="form-field">
-        <label>Project type</label>
-        <input type="text" placeholder="New build, renovation, consultation...">
-      </div>
-      <div class="form-field">
-        <label>Tell us more</label>
-        <textarea placeholder="Describe your vision, location, timeline..."></textarea>
-      </div>
-      <button class="btn-submit">Send inquiry →</button>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <a class="footer-logo" href="#">Voûte</a>
-  <span class="footer-copy">© 2026 Voûte Architectural. All rights reserved.</span>
-</footer>
-
-<script>
-// Force video autoplay
-const vid = document.getElementById('heroVideo');
-if (vid) {
-  vid.load();
-  const playPromise = vid.play();
-  if (playPromise !== undefined) {
-    playPromise.catch(() => {
-      // Autoplay blocked — try on first user interaction
-      document.addEventListener('touchstart', () => vid.play(), { once: true });
-      document.addEventListener('click', () => vid.play(), { once: true });
-    });
-  }
-}
-
-// Cursor
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('ring');
-document.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-  ring.style.left = e.clientX + 'px';
-  ring.style.top = e.clientY + 'px';
-});
-
-// Scroll reveal
-const reveals = document.querySelectorAll('.reveal, .why-card');
-const obs = new IntersectionObserver(entries => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      const delay = entry.target.classList.contains('why-card')
-        ? [...document.querySelectorAll('.why-card')].indexOf(entry.target) * 100
-        : 0;
-      setTimeout(() => entry.target.classList.add('visible'), delay);
-    }
-  });
-}, { threshold: 0.12 });
-reveals.forEach(el => obs.observe(el));
-</script>
-</body>
-</html>
+      <h2 class="contact-head
