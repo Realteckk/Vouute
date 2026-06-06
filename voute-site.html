@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voûte — Architectural</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #F5F2ED;
+  --warm-white: #FAFAF8;
+  --dark: #1A1814;
+  --gold: #B8956A;
+  --muted: #8A8680;
+  --border: #E8E4DC;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR */
+.cursor {
+  width: 8px; height: 8px;
+  background: var(--dark);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s;
+}
+.cursor-ring {
+  width: 32px; height: 32px;
+  border: 1px solid var(--dark);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.06s;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 28px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(26,24,20,0.4) 0%, transparent 100%);
+  pointer-events: none;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.16em;
+  color: var(--cream);
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
+}
+.nav-motto {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  position: relative;
+  z-index: 1;
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  position: relative;
+  z-index: 1;
+}
+.nav-links a {
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(245,242,237,0.7);
+  text-decoration: none;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--cream); }
+.nav-lang {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245,242,237,0.4);
+  position: relative;
+  z-index: 1;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  overflow: hidden;
+  background: var(--dark);
+}
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.6) saturate(0.85);
+  pointer-events: none;
+  -webkit-playsinline: true;
+  display: block;
+  z-index: 0;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(26,24,20,0.3) 0%, rgba(26,24,20,0.1) 40%, rgba(26,24,20,0.5) 100%);
+}
+.hero-tagline {
+  position: absolute;
+  top: 48px;
+  right: 60px;
+  text-align: right;
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(245,242,237,0.5);
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  max-width: 180px;
+  animation: fadeUp 1s ease 0.4s forwards;
+  opacity: 0;
+}
+.hero-title-wrap {
+  position: absolute;
+  top: 0; left: 0;
+  padding: 120px 60px 0;
+  animation: fadeUp 1s ease 0.2s forwards;
+  opacity: 0;
+}
+.hero-eyebrow {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,242,237,0.5);
+  margin-bottom: 8px;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(80px, 14vw, 180px);
+  line-height: 0.88;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+}
+.hero-title .line2 {
+  display: block;
+  padding-left: 80px;
+  opacity: 0.85;
+}
+.hero-title-motto {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-top: 16px;
+  display: block;
+}
+.hero-stats {
+  position: absolute;
+  right: 60px;
+  bottom: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: fadeUp 1s ease 0.6s forwards;
+  opacity: 0;
+}
+.stat-card {
+  background: rgba(245,242,237,0.9);
+  backdrop-filter: blur(8px);
+  padding: 16px 24px;
+  min-width: 160px;
+}
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--dark);
+}
+.stat-label {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.hero-cta {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: fadeUp 1s ease 1s forwards;
+  opacity: 0;
+}
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(26,24,20,0.8);
+  color: var(--cream);
+  padding: 16px 28px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: background 0.3s;
+  cursor: none;
+  border: 1px solid rgba(245,242,237,0.15);
+}
+.btn-cta:hover { background: var(--gold); border-color: var(--gold); }
+.btn-arrow {
+  width: 26px; height: 26px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: transform 0.3s;
+}
+.btn-cta:hover .btn-arrow { transform: rotate(45deg); background: var(--cream); color: var(--dark); }
+
+/* ABOUT */
+.about {
+  background: var(--warm-white);
+  padding: 120px 60px;
+  overflow: hidden;
+}
+.about-label {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 28px;
+}
+.about-label span {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.about-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(60px, 11vw, 150px);
+  line-height: 0.88;
+  color: var(--dark);
+  margin-bottom: 56px;
+  position: relative;
+}
+.about-heading .asterisk {
+  position: absolute;
+  right: 0; top: 0;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 28px;
+  color: var(--gold);
+  font-weight: 300;
+}
+.about-body {
+  max-width: 860px;
+  margin-bottom: 72px;
+}
+.about-body p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 2.4vw, 26px);
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--dark);
+}
+.about-body .highlight { color: var(--gold); font-weight: 400; }
+.about-body .em { font-style: italic; }
+.about-images {
+  display: grid;
+  grid-template-columns: 200px 200px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.about-img-wrap { overflow: hidden; }
+.about-img-wrap:nth-child(2) { margin-top: 60px; }
+.about-img-wrap img {
+  width: 200px;
+  height: 280px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+.about-img-wrap:hover img { transform: scale(1.04); }
+.about-text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 24px;
+  padding-bottom: 20px;
+}
+.about-text-col p {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+/* WHY */
+.why {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+.why-left {
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
+}
+.why-left-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.55) saturate(0.8);
+}
+.why-left-content {
+  position: absolute;
+  bottom: 56px;
+  left: 56px;
+  right: 56px;
+}
+.why-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 7vw, 90px);
+  line-height: 0.88;
+  color: var(--cream);
+}
+.why-title .sub {
+  display: block;
+  padding-left: 36px;
+  color: var(--gold);
+}
+.why-bottom-label {
+  position: absolute;
+  bottom: 28px;
+  left: 56px;
+  font-size: 10px;
+  color: rgba(245,242,237,0.35);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.why-right {
+  background: var(--dark);
+  padding: 72px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.why-card {
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  padding: 28px 0;
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.why-card.visible { opacity: 1; transform: translateX(0); }
+.why-card:first-child { padding-top: 0; }
+.why-card:last-child { border-bottom: none; padding-bottom: 0; }
+.why-card-num {
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.why-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+.why-card-desc {
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(245,242,237,0.4);
+  line-height: 1.8;
+}
+
+/* PORTFOLIO */
+.portfolio {
+  background: var(--cream);
+  padding: 120px 60px;
+}
+.portfolio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 56px;
+}
+.portfolio-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 8vw, 100px);
+  line-height: 0.9;
+  color: var(--dark);
+}
+.portfolio-link {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.portfolio-link:hover { color: var(--dark); }
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 14px;
+}
+.portfolio-item {
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+}
+.portfolio-item:nth-child(1) { grid-row: span 2; }
+.portfolio-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  min-height: 280px;
+  transition: transform 0.7s ease;
+}
+.portfolio-item:nth-child(1) img { min-height: 560px; }
+.portfolio-item:hover img { transform: scale(1.04); }
+.portfolio-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26,24,20,0.85) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  display: flex;
+  align-items: flex-end;
+  padding: 28px;
+}
+.portfolio-item:hover .portfolio-overlay { opacity: 1; }
+.portfolio-type {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 4px;
+}
+.portfolio-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--cream);
+}
+
+/* CONTACT */
+.contact {
+  background: var(--dark);
+  padding: 120px 60px;
+  position: relative;
+  overflow: hidden;
+}
+.contact::before {
+  content: 'CONTACT';
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18vw;
+  color: rgba(255,255,255,0.025);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  position: relative;
+  z-index: 1;
+}
+.contact-heading {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(44px, 6vw, 80px);
+  line-height: 0.9;
+  color: var(--cream);
+  margin-bottom: 28px;
+}
+.contact-sub {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(245,242,237,0.4);
+  line-height: 1.85;
+  max-width: 340px;
+}
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.form-field {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 14px;
+  transition: border-color 0.3s;
+}
+.form-field:focus-within { border-color: var(--gold); }
+.form-field label {
+  display: block;
+  font-size: 10px;
+  color: rgba(245,242,237,0.3);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--cream);
+  resize: none;
+}
+.form-field textarea { min-height: 80px; }
+.form-field input::placeholder,
+.form-field textarea::placeholder { color: rgba(245,242,237,0.18); }
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--gold);
+  color: var(--dark);
+  padding: 16px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  cursor: none;
+  margin-top: 8px;
+  align-self: flex-start;
+  transition: background 0.3s;
+}
+.btn-submit:hover { background: var(--cream); }
+
+/* FOOTER */
+footer {
+  background: var(--dark);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 28px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.14em;
+  color: rgba(245,242,237,0.25);
+  text-decoration: none;
+}
+.footer-copy {
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(245,242,237,0.18);
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  nav { padding: 20px 24px; }
+  .nav-links { display: none; }
+  .nav-motto { display: none; }
+  .hero-title-wrap { padding: 110px 24px 0; }
+  .hero-tagline { display: none; }
+  .hero-stats { right: 24px; bottom: 120px; }
+  .about { padding: 72px 24px; }
+  .about-images { grid-template-columns: 1fr 1fr; }
+  .about-text-col { display: none; }
+  .about-img-wrap img { width: 100%; }
+  .why { grid-template-columns: 1fr; }
+  .why-left { min-height: 50vh; }
+  .why-right { padding: 48px 24px; }
+  .portfolio { padding: 72px 24px; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+  .portfolio-item:nth-child(1) { grid-row: span 1; }
+  .contact { padding: 72px 24px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+  footer { padding: 24px; flex-direction: column; gap: 10px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Voûte</a>
+  <div class="nav-motto">Bâtir pour l'éternité.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="nav-lang">EN / ENG</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <video class="hero-video" id="heroVideo" muted loop playsinline disablepictureinpicture preload="auto">
+    <source src="/Hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-tagline">
+    defined by structure<br>elevated by material<br>grounded in permanence.
+  </div>
+
+  <div class="hero-title-wrap">
+    <div class="hero-eyebrow">architectural</div>
+    <h1 class="hero-title">
+      voûte
+      <span class="line2" style="font-size:0.88em;">studio</span>
+    </h1>
+    <span class="hero-title-motto">Bâtir pour l'éternité.</span>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-num">18</div>
+      <div class="stat-label">Années d'expérience</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">94</div>
+      <div class="stat-label">Projets livrés</div>
+    </div>
+  </div>
+
+  <div class="hero-cta">
+    <a href="#contact" class="btn-cta">
+      Contact us
+      <span class="btn-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-label">
+    <span>development</span>
+    <span>premium</span>
+  </div>
+  <h2 class="about-heading reveal">
+    about us
+    <span class="asterisk">✳</span>
+  </h2>
+  <div class="about-body reveal">
+    <p>
+      <span class="highlight">We develop</span> contemporary residences where béton, pierre, and acier
+      <span class="em">exist in deliberate balance.</span>
+      Our focus is not simply to build structures — <span class="highlight">but</span> to create spaces with hauteur, volume, and seuil that endure beyond trends.
+    </p>
+  </div>
+  <div class="about-images reveal">
+    <div class="about-img-wrap">
+      <img src="/Image-2.jpg" alt="Architecture 1">
+    </div>
+    <div class="about-img-wrap">
+      <img src="/Image-3.jpg" alt="Architecture 2">
+    </div>
+    <div class="about-text-col">
+      <p>By integrating innovative technologies and sustainable solutions, we ensure long-term value for both homeowners and investors.</p>
+      <p>By uniting vision, precision and craftsmanship, we deliver exceptional residences that reflect confidence, quality and enduring distinction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="services">
+  <div class="why-left">
+    <img class="why-left-img" src="/Image-4.jpg" alt="Why Voûte">
+    <div class="why-left-content">
+      <div class="why-title">
+        whu
+        <span class="sub">voûte</span>
+      </div>
+    </div>
+    <div class="why-bottom-label">architectural</div>
+  </div>
+  <div class="why-right">
+    <div class="why-card">
+      <div class="why-card-num">01 — Pierre</div>
+      <div class="why-card-title">Every material chosen with permanence in mind.</div>
+      <div class="why-card-desc">Stone, concrete, steel — selected for longevity, not trend. Materials that grow more distinguished with time.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-card-num">02 — Voûte</div>
+      <div class="why-card-title">Structural precision refined through years of practice.</div>
+      <div class="why-card-desc">Every arch, every span, every load-bearing decision made with full architectural rigour.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-card-num">03 — Façade</div>
+      <div class="why-card-title">Every exterior designed as a statement of identity.</div>
+      <div class="why-card-desc">The face of a structure speaks before you enter. We ensure it speaks with authority.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-card-num">04 — Socle</div>
+      <div class="why-card-title">Foundations built for longevity, not trend.</div>
+      <div class="why-card-desc">A structure is only as strong as what it stands on. We build from the ground up with absolute integrity.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-card-num">05 — Portée</div>
+      <div class="why-card-title">From concept to completion, seamless and transparent.</div>
+      <div class="why-card-desc">Clear timelines, open communication, and a process you can trust at every stage of the build.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="portfolio-header reveal">
+    <h2 class="portfolio-heading">Portfolio</h2>
+    <a href="#" class="portfolio-link">View all projects →</a>
+  </div>
+  <div class="portfolio-grid reveal">
+    <div class="portfolio-item">
+      <img src="/Image-1.jpg" alt="La Maison Ardoise">
+      <div class="portfolio-overlay">
+        <div>
+          <span class="portfolio-type">Residential · 2024</span>
+          <div class="portfolio-name">La Maison Ardoise</div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <img src="/Image-2.jpg" alt="Villa Béton">
+      <div class="portfolio-overlay">
+        <div>
+          <span class="portfolio-type">Residential · 2023</span>
+          <div class="portfolio-name">Villa Béton</div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-item">
+      <img src="/Image-4.jpg" alt="Résidence Marbre">
+      <div class="portfolio-overlay">
+        <div>
+          <span class="portfolio-type">Residential · 2023</span>
+          <div class="portfolio-name">Résidence Marbre</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-grid">
+    <div class="reveal">
+      <h2 class="contact-heading">Let's build together.</h2>
+      <p class="contact-sub">Tell us about your project. We respond to every inquiry within 24 hours and treat every conversation with full attention.</p>
+    </div>
+    <div class="contact-form reveal">
+      <div class="form-field">
+        <label>Your name</label>
+        <input type="text" placeholder="John Anderson">
+      </div>
+      <div class="form-field">
+        <label>Email address</label>
+        <input type="email" placeholder="john@example.com">
+      </div>
+      <div class="form-field">
+        <label>Project type</label>
+        <input type="text" placeholder="New build, renovation, consultation...">
+      </div>
+      <div class="form-field">
+        <label>Tell us more</label>
+        <textarea placeholder="Describe your vision, location, timeline..."></textarea>
+      </div>
+      <button class="btn-submit">Send inquiry →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a class="footer-logo" href="#">Voûte</a>
+  <span class="footer-copy">© 2026 Voûte Architectural. All rights reserved.</span>
+</footer>
+
+<script>
+// Force video autoplay
+const vid = document.getElementById('heroVideo');
+if (vid) {
+  vid.load();
+  const playPromise = vid.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {
+      // Autoplay blocked — try on first user interaction
+      document.addEventListener('touchstart', () => vid.play(), { once: true });
+      document.addEventListener('click', () => vid.play(), { once: true });
+    });
+  }
+}
+
+// Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('ring');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  ring.style.left = e.clientX + 'px';
+  ring.style.top = e.clientY + 'px';
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal, .why-card');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      const delay = entry.target.classList.contains('why-card')
+        ? [...document.querySelectorAll('.why-card')].indexOf(entry.target) * 100
+        : 0;
+      setTimeout(() => entry.target.classList.add('visible'), delay);
+    }
+  });
+}, { threshold: 0.12 });
+reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
