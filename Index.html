@@ -707,8 +707,8 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg">
-    <video class="hero-video" autoplay muted loop playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback" poster="/assets/images/img1.jpg">
-      <source src="/assets/videos/hero.mp4" type="video/mp4">
+    <video class="hero-video" autoplay muted loop playsinline disablepictureinpicture controlslist="nodownload nofullscreen noremoteplayback" poster="/Image-1.jpg">
+      <source src="/Hero.mp4" type="video/mp4">
     </video>
   </div>
   <div class="hero-overlay"></div>
@@ -767,10 +767,10 @@ footer {
 
   <div class="about-images reveal">
     <div class="about-img-wrap">
-      <img alt="Architecture 1" id="aboutImg1" src="/assets/images/img2.jpg">
+      <img alt="Architecture 1" id="aboutImg1" src="/Image-2.jpg">
     </div>
     <div class="about-img-wrap">
-      <img alt="Architecture 2" id="aboutImg2" src="/assets/images/img3.jpg">
+      <img alt="Architecture 2" id="aboutImg2" src="/Image-3.jpg">
     </div>
     <div class="about-desc-grid" style="display:flex;flex-direction:column;justify-content:flex-end;gap:24px;">
       <div class="about-desc">
@@ -785,7 +785,7 @@ footer {
 
 <!-- WHY SECTION -->
 <section class="why" id="services">
-  <div class="why-left" style="background-image:url('/assets/images/img4.jpg');background-size:cover;background-position:center;">
+  <div class="why-left" style="background-image:url('/Image-4.jpg');background-size:cover;background-position:center;">
     <div class="why-left-overlay"></div>
     <div class="why-left-content">
       <div class="why-title">
@@ -819,139 +819,4 @@ footer {
     <div class="why-card">
       <div class="why-card-num">05 — Portée</div>
       <div class="why-card-title">From concept to completion, seamless and transparent.</div>
-      <div class="why-card-desc">Clear timelines, open communication, and a process you can trust at every stage of the build.</div>
-    </div>
-  </div>
-</section>
-
-<!-- PORTFOLIO -->
-<section class="portfolio" id="portfolio">
-  <div class="portfolio-header reveal">
-    <h2 class="portfolio-heading">Portfolio</h2>
-    <a href="#" class="portfolio-link">View all projects →</a>
-  </div>
-  <div class="portfolio-grid reveal">
-    <div class="portfolio-item">
-      <img alt="Project 1" id="portImg1" src="/assets/images/img1.jpg">
-      <div class="portfolio-item-overlay">
-        <div>
-          <span class="portfolio-item-type">Residential · 2024</span>
-          <div class="portfolio-item-label">La Maison Ardoise</div>
-        </div>
-      </div>
-    </div>
-    <div class="portfolio-item">
-      <img alt="Project 2" id="portImg2" src="/assets/images/img2.jpg">
-      <div class="portfolio-item-overlay">
-        <div>
-          <span class="portfolio-item-type">Residential · 2023</span>
-          <div class="portfolio-item-label">Villa Béton</div>
-        </div>
-      </div>
-    </div>
-    <div class="portfolio-item">
-      <img alt="Project 3" id="portImg3" src="/assets/images/img4.jpg">
-      <div class="portfolio-item-overlay">
-        <div>
-          <span class="portfolio-item-type">Residential · 2023</span>
-          <div class="portfolio-item-label">Résidence Marbre</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="contact-grid">
-    <div class="reveal">
-      <h2 class="contact-heading">Let's build together.</h2>
-      <p class="contact-sub">Tell us about your project. We respond to every inquiry within 24 hours and treat every conversation with full attention.</p>
-    </div>
-    <div class="contact-form reveal">
-      <div class="form-field">
-        <label>Your name</label>
-        <input type="text" placeholder="John Anderson">
-      </div>
-      <div class="form-field">
-        <label>Email address</label>
-        <input type="email" placeholder="john@example.com">
-      </div>
-      <div class="form-field">
-        <label>Project type</label>
-        <input type="text" placeholder="New build, renovation, consultation...">
-      </div>
-      <div class="form-field">
-        <label>Tell us more</label>
-        <textarea placeholder="Describe your vision, location, timeline..."></textarea>
-      </div>
-      <button class="btn-submit">Send inquiry →</button>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <a class="footer-logo" href="#">Voûte</a>
-  <span class="footer-copy">© 2026 Voûte Architectural. All rights reserved.</span>
-</footer>
-
-<script>
-// Custom cursor
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let mouseX = 0, mouseY = 0;
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursor.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
-  ring.style.transform = `translate(${mouseX - 18}px, ${mouseY - 18}px)`;
-});
-
-// Load images from user uploads
-const images = [
-  { id: 'heroImg', src: null },
-  { id: 'aboutImg1', src: null },
-  { id: 'aboutImg2', src: null },
-  { id: 'whyImg', src: null },
-  { id: 'portImg1', src: null },
-  { id: 'portImg2', src: null },
-  { id: 'portImg3', src: null },
-];
-
-// Map uploaded images
-const uploadedImages = [
-  '/uploads/img1.jpg',
-  '/uploads/img2.jpg',
-  '/uploads/img3.jpg',
-  '/uploads/img4.jpg',
-];
-
-// Assign images - hero gets img1, about gets img2+img3, why gets img4, portfolio gets all 4
-
-
-
-
-
-
-
-
-// Use the actual uploaded images as base64
-// The images will be set via CSS backgrounds since they're uploaded files
-
-// Scroll reveal
-const revealEls = document.querySelectorAll('.reveal, .why-card');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.classList.add('visible');
-      }, entry.target.classList.contains('why-card') ? 
-        [...document.querySelectorAll('.why-card')].indexOf(entry.target) * 120 : 0);
-    }
-  });
-}, { threshold: 0.15 });
-revealEls.forEach(el => observer.observe(el));
-</script>
-</body>
-</html>
+      <div class="why-card-
